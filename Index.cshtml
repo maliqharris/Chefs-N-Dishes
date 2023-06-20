@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<Chef>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <div>
+   <a asp-controller = "Home" asp-action="Index">Chefs</a>
+     <a asp-controller="Home"  asp-action="NewDish" method="GET">Add a Dish</a>
+      <a asp-controller="Home"  asp-action="NewChef" method="GET">Add a chef</a>
+      <a asp-controller="Home"  asp-action="AllDishes" method="GET">Dishes</a>
+
+</div>
+</div>
+
+   
+   @foreach (var chef in Model)
+{
+    <div>
+        <h3>@chef.FirstName @chef.LastName</h3>
+         <p>Age: @CalculateAge(chef.DateOfBirth)</p>
+         <p>Number of Dishes: @chef.AllDishes.Count</p>
+       
+        
+        
+        
+    </div>
+}
+@functions {
+    public int CalculateAge(DateTime dateOfBirth)
+    {
+        var today = DateTime.Today;
+        var age = today.Year - dateOfBirth.Year;
+        if (dateOfBirth.Date > today.AddYears(-age)) age--;
+        return age;
+    }
+}
+
